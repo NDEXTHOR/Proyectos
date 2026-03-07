@@ -14,3 +14,4 @@ int main(){
     cout << factorial(n);
     return 0;
 }
+
