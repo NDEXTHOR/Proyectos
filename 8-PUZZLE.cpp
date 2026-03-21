@@ -463,17 +463,17 @@ int main(){
 	puzzle Inicial('1', '2', '3', '4', '5', '6', '7', '8', ' ');
 	puzzle Final(' ', '8', '7', '6', '5', '4', '3', '2', '1');
 
-	problema_puzzles Amp(Inicial, Final);
-	cout << "Recorido por amplitud" << endl;
-	Amp.Amplitud();
+	// problema_puzzles Amp(Inicial, Final);
+	// cout << "Recorido por amplitud" << endl;
+	// Amp.Amplitud();
 
-	system("pause");
+	// system("pause");
 
-	problema_puzzles Pro(Inicial, Final);
-	cout << "Recorido por profundidad" << endl;
-	Pro.Profundidad();
+	// problema_puzzles Pro(Inicial, Final);
+	// cout << "Recorido por profundidad" << endl;
+	// Pro.Profundidad();
 
-	system("pause");
+	// system("pause");
 
 	problema_puzzles A(Inicial, Final);
 	cout << "Busqueda heuristica" << endl;
