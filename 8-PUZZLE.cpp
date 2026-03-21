@@ -67,14 +67,28 @@ puzzle::puzzle(char c11, char c12, char c13, char c21, char c22, char c23, char 
 	matriz[2][2] = c33;
 	buscar();
 }
+// void puzzle::imprimir(){
+// 	for (int i = 0; i < 3; i++) {//filas
+// 		for (int j = 0; j < 3; j++) {//columnas
+// 			cout << matriz[i][j];
+// 		}
+// 		cout << endl;
+// 	}
+// 	cout << endl;
+// }
 void puzzle::imprimir(){
 	for (int i = 0; i < 3; i++) {//filas
+		cout << "-------------" << endl;
 		for (int j = 0; j < 3; j++) {//columnas
-			cout << matriz[i][j];
+			if (j < 2) {
+                cout << "| " << matriz[i][j] << " ";
+            } else {
+                cout << "| " << matriz[i][j] << " |";
+            }
 		}
 		cout << endl;
 	}
-	cout << endl;
+	cout << "-------------" << endl;
 }
 int puzzle::evaluacion(puzzle h, puzzle m) {
 		int iguales = 0;
