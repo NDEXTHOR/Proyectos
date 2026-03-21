@@ -159,7 +159,6 @@ problemaSudoku::problemaSudoku(sudoku a) {
     cout << "Sudoku a resolver: " << endl;
     inicial.imprimir();
 }
-
 void problemaSudoku::Amplitud() {
     list<sudoku> lista;
 

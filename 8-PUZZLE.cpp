@@ -1,8 +1,4 @@
-// Ese programa resuenve el 8 puzzle, pero como tan no se recibe ninguna entrada, talvez despues agregue eso
-#include <iostream>
-#include <list>
-#include <queue>
-#include <cstdlib>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -21,7 +17,9 @@ public:
 	}
 
 	puzzle();
+	puzzle(char mtzUsuario[3][3]);
 	puzzle(char, char, char, char, char, char, char, char, char);
+	static void ingresarPuzzle(char mtz[3][3]);
 	void imprimir();
 	void buscar();
 	int evaluacion(puzzle, puzzle);
@@ -44,16 +42,13 @@ puzzle::puzzle() {
 	matriz[2][1] = '8';
 	matriz[2][2] = ' ';
 }
-void puzzle::buscar() {
-	for (int i = 0; i < 3; i++) {//filas
-		for (int j = 0; j < 3; j++) {//columnas
-			if (matriz[i][j] == ' ') {
-				fila = i;
-				columna = j;
-				break;
-			}
-		}
+puzzle::puzzle(char mtzUsuario[3][3]){
+	for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            matriz[i][j] = mtzUsuario[i][j];
+        }
 	}
+	buscar();
 }
 puzzle::puzzle(char c11, char c12, char c13, char c21, char c22, char c23, char c31, char c32, char c33) {
 	matriz[0][0] = c11;
@@ -67,6 +62,27 @@ puzzle::puzzle(char c11, char c12, char c13, char c21, char c22, char c23, char 
 	matriz[2][2] = c33;
 	buscar();
 }
+void puzzle::buscar() {
+	for (int i = 0; i < 3; i++) {//filas
+		for (int j = 0; j < 3; j++) {//columnas
+			if (matriz[i][j] == ' ') {
+				fila = i;
+				columna = j;
+				break;
+			}
+		}
+	}
+}
+void puzzle::ingresarPuzzle(char mtz[3][3]) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+			cin >> mtz[i][j];
+			if (mtz[i][j] == '0') {// Usamos el 0 como espacio vacio
+				mtz[i][j] = ' ';
+			}
+        }
+	}
+}
 // void puzzle::imprimir(){
 // 	for (int i = 0; i < 3; i++) {//filas
 // 		for (int j = 0; j < 3; j++) {//columnas
@@ -77,6 +93,7 @@ puzzle::puzzle(char c11, char c12, char c13, char c21, char c22, char c23, char 
 // 	cout << endl;
 // }
 void puzzle::imprimir(){
+	//Mejore el formato con el que muestra las matrices/puzzles
 	for (int i = 0; i < 3; i++) {//filas
 		cout << "-------------" << endl;
 		for (int j = 0; j < 3; j++) {//columnas
@@ -474,24 +491,72 @@ void problema_puzzles::Heuristica() {
 
 int main(){
 	
-	puzzle Inicial('1', '2', '3', '4', '5', '6', '7', '8', ' ');
-	puzzle Final(' ', '8', '7', '6', '5', '4', '3', '2', '1');
+	int op1, op2; 
+	cout << "Menu: \n (1) Ingresar puzzle\n (2) Usar puzzle de ejemplo\n Ingrese una opcion: ";
 
-	// problema_puzzles Amp(Inicial, Final);
-	// cout << "Recorido por amplitud" << endl;
-	// Amp.Amplitud();
+	cin >> op1;
 
-	// system("pause");
+	puzzle Inicial = puzzle(); // Valor por defecto
+    puzzle Final = puzzle(); // x2
 
-	// problema_puzzles Pro(Inicial, Final);
-	// cout << "Recorido por profundidad" << endl;
-	// Pro.Profundidad();
+	switch (op1) {
+		case 1:
+			// Puzzles definidos por el usuario
+			char mtzInicial[3][3];
+			char mtzFinal[3][3];
 
-	// system("pause");
+			cout << "Nota: En donde va el espacio vacio debe ir un 0... \n";
+			cout << "Ingreso del puzzle inicial: \n";
+			puzzle::ingresarPuzzle(mtzInicial);
+			cout << "Ingreso del puzzle final: \n";
+			puzzle::ingresarPuzzle(mtzFinal);
 
-	problema_puzzles A(Inicial, Final);
-	cout << "Busqueda heuristica" << endl;
-	A.Heuristica();
+			Inicial = puzzle(mtzInicial);
+			Final = puzzle(mtzFinal);
+		break;
+
+		case 2:
+			// Puzzles predefinidos, es solo para un ejemplo de uso en si
+			Inicial = puzzle('1', '2', '3', '4', '5', '6', '7', '8', ' ');
+			Final = puzzle(' ', '8', '7', '6', '5', '4', '3', '2', '1');
+		break;
+		default:
+			cout << "Opcion no valida...";
+		break;
+	}
+	
+	/*       Resolucion       */
+	cout << "Menu: \n (1) Amplitud\n (2) Profundidad\n (3) Heuristica\n Ingrese una opcion: ";
+	cin >> op2;
+
+	switch (op2) {
+		// Lo de las llaves se llama scope local, sirve para que las variables solo existan dentro 
+		// de cada case, esta delimitada u existencias en esas llaves
+
+		//Si no se usan da un error que se puede solucionar modificando unas cosas en la clase, 
+		// pero es mas facil y comodo de esta manera
+		case 1: {
+			problema_puzzles Amp(Inicial, Final);
+			cout << "Recorido por amplitud" << endl;
+			Amp.Amplitud();
+		}
+		break;
+		case 2: {
+			problema_puzzles Pro(Inicial, Final);
+			cout << "Recorido por profundidad" << endl;
+			Pro.Profundidad();
+		}
+		break;
+		case 3: {
+			problema_puzzles A(Inicial, Final);
+			cout << "Busqueda heuristica" << endl;
+			A.Heuristica();
+		}
+		break;
+		default:
+			cout << "Opcion no valida...";
+		break;
+	}
 
 	return 0;
 }

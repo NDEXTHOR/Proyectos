@@ -42,7 +42,7 @@ Nota: El codigo usa variables globales, una mejora seria usar clases para un mej
 
 # Proyectos - 8-PUZZLE
 
-Este programa resuelve el 8-PUZZLE con tres formas: amplitud (BFS), profundidad (DFS) y heuristica (prioriza los tableros que se ven mas cerca de la meta). En teoria trabaja con un estado inicial y uno final, pero por ahora ambos estan escritos directo en el codigo.
+Este programa resuelve el 8-PUZZLE con tres formas: amplitud (BFS), profundidad (DFS) y heuristica (prioriza los tableros que se ven mas cerca de la meta).
 
 Se maneja principalmente con dos clases:
 
@@ -51,8 +51,9 @@ Se maneja principalmente con dos clases:
 
 Funciones importantes de puzzle:
 
+- ingresarPuzzle(mtz[3][3]): metodo estatico que permite capturar un puzzle desde teclado. El usuario ingresa 9 digitos donde 0 representa el espacio vacio.
 - buscar(): encuentra donde esta el espacio vacio.
-- imprimir(): muestra el tablero en consola.
+- imprimir(): muestra el tablero en consola(Ya cuenta con un formato mejorado).
 - evaluacion(): cuenta cuantas fichas estan fuera de lugar (sin contar el espacio vacio), y eso se usa en la heuristica.
 - mov_espacio_izquierda/derecha/arriba/abajo(): generan nuevos estados moviendo el espacio vacio, y van guardando el historial de movimientos para luego imprimir la ruta final.
 
@@ -65,13 +66,23 @@ Funciones importantes de problema_puzzles:
 
 Flujo general del programa:
 
-1. Se crea el puzzle inicial y el puzzle meta en main().
-2. Se crea el objeto problema_puzzles con esos dos estados.
-3. Se ejecuta el metodo de busqueda (ahorita solo esta funcionando la heuristica).
-4. En cada iteracion se toma un estado, se revisa si ya es la meta y si no lo es, se generan hijos con los movimientos posibles.
-5. Cuando se encuentra la solucion, se imprime la ruta de movimientos paso por paso.
+1. **Menu inicial**: el programa muestra un menu donde puedes elegir entre ingresar un puzzle personalizado o usar el puzzle de ejemplo predefinido.
+2. Si eliges ingresar puzzle: captura el estado inicial y el estado meta desde teclado (9 digitos cada uno, donde 0 es el espacio vacio).
+3. Si eliges el ejemplo: usa matrices predefinidas (estado inicial: 1 2 3 4 5 6 7 8 espacio | estado meta: espacio 8 7 6 5 4 3 2 1).
+4. **Menu de busqueda**: despues, muestra otro menu para elegir el metodo de resolucion (amplitud, profundidad o heuristica).
+5. Se crea el objeto problema_puzzles con los estados elegidos.
+6. Se ejecuta el metodo de busqueda seleccionado.
+7. En cada iteracion se toma un estado, se revisa si ya es la meta y si no lo es, se generan hijos con los movimientos posibles.
+8. Cuando se encuentra la solucion, se imprime la ruta de movimientos paso por paso.
 
-Nota: BFS y DFS estan comentadas en el codigo por comodidad, porque imprimen bastante informacion y puede tardar mas en algunos casos.
+Mejoras recientes:
+
+- Se agregó ingresarPuzzle() como metodo estatico para permitir entrada desde teclado.
+- Se implementó un sistema de menus para elegir entre puzzle personalizado o ejemplo.
+- Se agregó otro menu para elegir el algoritmo de busqueda.
+- Se implementó scope local en los cases del switch con llaves {} para mejor manejo de variables.
+
+Nota: BFS y DFS se pueden usar sin problema, pero es mucho mas recomendado usar la heuristica ya que hay una mejora notable en el tiempo de resolucion.
 
 # Proyectos - Sudoku
 
