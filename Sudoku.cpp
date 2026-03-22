@@ -13,6 +13,7 @@ public:
 	sudoku();// La matriz se inicializa con espacios vacios
 	sudoku(char mtzUsuario[9][9]);// La matriz se inicializa con una matriz definida
 
+    static void ingresarSudoku(char sudoku[9][9]);
 	void imprimir();
     
     // Reciben un numero y numero de fila, columna o region y verifican si ese numero falta en esa fila, columna o region
@@ -42,6 +43,16 @@ sudoku::sudoku(char mtzUsuario[9][9]) {
     }
 }
 
+void sudoku::ingresarSudoku(char sdk[9][9]) {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+			cin >> sdk[i][j];
+            if (sdk[i][j] == '0') {// Usamos el 0 como espacio vacio
+				sdk[i][j] = ' ';
+			}
+        }
+	}
+}
 void sudoku::imprimir() {  
     for (int i = 0; i < 9; i++) {  
         cout << "- - - - - - - - - - - - - - - - - - -" << endl;// Supongo que podria mejorar el formato, pero asi se ve bien
@@ -255,22 +266,47 @@ void problemaSudoku::Profundidad() {
 }
 
 int main(){
-    // Matriz definida
-    char matrizAux[9][9] = {
-    { '8', ' ', ' ',   ' ', ' ', ' ',   ' ', ' ', ' ' },
-    { ' ', ' ', '3',   '6', ' ', ' ',   ' ', ' ', ' ' },
-    { ' ', '7', ' ',   ' ', '9', ' ',   '2', ' ', ' ' },
 
-    { ' ', '5', ' ',   ' ', ' ', '7',   ' ', ' ', ' ' },
-    { ' ', ' ', ' ',   ' ', '4', '5',   '7', ' ', ' ' },
-    { ' ', ' ', ' ',   '1', ' ', ' ',   ' ', '3', ' ' },
+    cout << "Menu:\n (1) Ingresar sudoku\n (2) Usar sudoku de ejemplo\n Eliga una opcion:\n";
+    int op;
+    cin >> op;
 
-    { ' ', ' ', '1',   ' ', ' ', ' ',   ' ', '6', '8' },
-    { ' ', ' ', '8',   '5', ' ', ' ',   ' ', '1', ' ' },
-    { ' ', '9', ' ',   ' ', ' ', ' ',   '4', ' ', ' ' }
-    };
+    char matrizAux[9][9];
+    sudoku a = sudoku();// Constructora sin argumentos(Solo espacios vacios)
+    
+    switch (op) {
+        case 1:
+            cout << "Ingresar sudoku: \n";
+            sudoku::ingresarSudoku(matrizAux);
+            a = sudoku(matrizAux);
+        break;
 
-    sudoku a(matrizAux);// Constructora con argumentos
+        case 2:
+            cout << "Matriz de ejemplo...: \n";
+            // La llaves son por que no se pueden declarar variables en un case, pero con las 
+            // llaves delimitamos el alcanze de esas variables y nos dejan usarlas
+            {
+                char matrizTemp[9][9] = {
+                    { '8', ' ', ' ',   ' ', ' ', ' ',   ' ', ' ', ' ' },
+                    { ' ', ' ', '3',   '6', ' ', ' ',   ' ', ' ', ' ' },
+                    { ' ', '7', ' ',   ' ', '9', ' ',   '2', ' ', ' ' },
+                    
+                    { ' ', '5', ' ',   ' ', ' ', '7',   ' ', ' ', ' ' },
+                    { ' ', ' ', ' ',   ' ', '4', '5',   '7', ' ', ' ' },
+                    { ' ', ' ', ' ',   '1', ' ', ' ',   ' ', '3', ' ' },
+                    
+                    { ' ', ' ', '1',   ' ', ' ', ' ',   ' ', '6', '8' },
+                    { ' ', ' ', '8',   '5', ' ', ' ',   ' ', '1', ' ' },
+                    { ' ', '9', ' ',   ' ', ' ', ' ',   '4', ' ', ' ' }
+                };
+                a = sudoku(matrizTemp);
+            }
+            break;
+
+        default:
+            cout << "Opcion no valida!!!";
+        break;
+    }
 
     problemaSudoku A(a);
 
