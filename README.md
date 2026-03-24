@@ -86,7 +86,7 @@ Nota: BFS y DFS se pueden usar sin problema, pero es mucho mas recomendado usar 
 
 # Proyectos - Sudoku
 
-Este programa resuelve un Sudoku usando busqueda por amplitud (BFS) y busqueda por profundidad (DFS). Igual que en el 8-PUZZLE, el tablero inicial por ahora esta definido directo en el codigo.
+Este programa resuelve un Sudoku usando busqueda por amplitud (BFS) y busqueda por profundidad (DFS).
 
 Se maneja principalmente con dos clases:
 
@@ -95,6 +95,7 @@ Se maneja principalmente con dos clases:
 
 Funciones importantes de sudoku:
 
+- ingresarSudoku(sudoku[9][9]): metodo estatico que permite capturar un sudoku desde teclado. El usuario ingresa 81 digitos (9 filas de 9) donde 0 representa los espacios vacios.
 - imprimir(): muestra el tablero en consola.
 - verificarFila(num, fila): revisa si un numero ya existe en una fila.
 - verificarColumna(num, columna): revisa si un numero ya existe en una columna.
@@ -108,9 +109,36 @@ Funciones importantes de problemaSudoku:
 
 Flujo general del programa:
 
-1. Se crea la matriz del Sudoku en main().
-2. Se crea el objeto sudoku con esa matriz.
-3. Se crea el objeto problemaSudoku.
-4. Se ejecutan Amplitud() y Profundidad().
-5. Cada metodo toma un estado, busca la primera celda vacia y prueba numeros del 1 al 9 que cumplan reglas de fila, columna y region.
-6. Si el tablero queda completo y valido, imprime la solucion y el numero de iteraciones.
+1. **Menu inicial**: el programa muestra un menu donde puedes elegir entre ingresar un sudoku personalizado desde teclado o usar el sudoku predefinido.
+2. Si eliges ingresar sudoku: captura 81 digitos (donde 0 son espacios vacios) para formar la matriz 9x9.
+3. Si eliges el ejemplo: usa un sudoku predefinido en el codigo.
+4. Se crea el objeto sudoku con la matriz elegida.
+5. Se crea el objeto problemaSudoku.
+6. Se ejecutan Amplitud() y Profundidad().
+7. Cada metodo toma un estado, busca la primera celda vacia y prueba numeros del 1 al 9 que cumplan reglas de fila, columna y region.
+8. Si el tablero queda completo y valido, imprime la solucion y el numero de iteraciones.
+
+# Proyectos - Tic-Tac-Toe con IA
+
+Es el juego del gato, pero contra la computadora. La IA nunca pierde, juega de forma perfecta. Si juegas bien, solo puedes empatar; si cometes un error, la IA te gana.
+
+Como funciona:
+
+- El juego se juega en un tablero 3x3.
+- Tu colocas X y la IA coloca O.
+- La IA usa un algoritmo que prueba todos los movimientos posibles y elige el mejor.
+
+Lo interesante del programa:
+
+- La IA no es random, calcula cual es el movimiento optimo analizando todas las posibilidades.
+- Valida que los movimientos sean validos (no fuera del tablero, no en una casilla ocupada).
+- Es bastante grafico para ser en terminal.
+
+Como se juega:
+
+1. Se muestra el tablero vacio.
+2. Tu ingresas donde quieres poner tu X (coordenadas de 0 a 2).
+3. Si el movimiento es valido, aparece tu X en el tablero.
+4. La IA calcula su mejor movimiento y coloca su O.
+5. Se repite hasta que alguien gane o se llene el tablero (empate).
+6. Se muestra quien gano.
