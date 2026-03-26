@@ -7,8 +7,8 @@ using namespace std;
 class GeneradorSudoku {
 private:
 	char sudoku[9][9];
-    int F_Inicio = 0;
-    int C_Inicio = 0;
+    int F_Inicio;
+    int C_Inicio;
 
 public:	
 	GeneradorSudoku();// La matriz se inicializa con espacios vacios
@@ -27,10 +27,13 @@ public:
 
     bool contarSoluciones(int& contador);
     bool tieneSolucionUnica();
+    void limpiarMatriz();
 };
 
 GeneradorSudoku::GeneradorSudoku() {
 	//Inicializar la matriz con espacios vacíos
+    F_Inicio = 0;
+    C_Inicio = 0;
 	int i, j;
     fo(i, 9)
 		fo(j, 9)
@@ -181,23 +184,28 @@ bool GeneradorSudoku::tieneSolucionUnica(){
     
     return res;
 }
+void GeneradorSudoku::limpiarMatriz(){
+    int i, j;
+    fo(i, 9)
+        fo(j, 9)
+            sudoku[i][j] = ' ';
+}
 
 int main(){
     srand(time(0));// Es la semilla para el rand
 
     GeneradorSudoku generador;
-    generador.generarPuzzle(3);  // 1=Fácil, 2=Medio, 3=Difícil
-    generador.imprimir();
 
+    generador.generarPuzzle(3);
+    
+    generador.imprimir();
+    // Esta funcion es para que me sirva para la entrada de "Sudoku.cpp"
+    //generador.imprimirSinFormato();
+    
     if(generador.tieneSolucionUnica()){
         cout << "Sudoku con solucion unica!\n";
     } else {
         cout << "Sudoku sin solucion unica\n";
     }
-
-    cout << "\n\n";
-    // Esta funcion es para que me sirva para la entrada de "Sudoku.cpp"
-    generador.imprimirSinFormato();
-
     return 0;
 }
