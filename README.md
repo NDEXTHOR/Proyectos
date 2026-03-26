@@ -1,3 +1,6 @@
+# Mejor documentacion
+https://ndexthor-proyectos.mintlify.app/introduction
+
 # Proyectos - Operador de matrices
 
 Este programa es un operador de matrices en consola. Es bastante basico, pero resuelve tres operaciones: suma, resta y multiplicacion. No muestra procedimiento paso a paso ni tiene todas las validaciones posibles, pero para practicar y hacer operaciones funciona bien.
