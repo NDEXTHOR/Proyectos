@@ -145,3 +145,7 @@ Como se juega:
 4. La IA calcula su mejor movimiento y coloca su O.
 5. Se repite hasta que alguien gane o se llene el tablero (empate).
 6. Se muestra quien gano.
+
+
+# Proyectos - Snake
+
