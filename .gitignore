@@ -1,1 +1,29 @@
+# Entorno virtual de Python
+.venv/
+venv/
+env/
+ENV/
+
+# Configuración personal del editor (solo para ti)
+.vscode/
+.clang-format
+
+# Ejecutables
 *.exe
+*.o
+*.out
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.bak
+*~
+
+# CMake
+build/
+cmake_install.cmake
+CMakeCache.txt
+CMakeFiles/

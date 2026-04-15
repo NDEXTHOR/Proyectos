@@ -197,12 +197,10 @@ void problemaSudoku::Amplitud() {
                     // Probar números del 1 al 9
                     for (char num = '1'; num <= '9'; num++) {
                         int region = ((i / 3) * 3) + (j / 3) + 1;// Calcula la region
-                        if (!aux.verificarFila(num, i) &&
-                            !aux.verificarColumna(num, j) &&
-                            !aux.verificarRegion(num, region)) {
-                            sudoku nuevo(aux.matriz);
-                            nuevo.matriz[i][j] = num;
-                            lista.push_back(nuevo);
+                        if (!aux.verificarFila(num, i) && !aux.verificarColumna(num, j) && !aux.verificarRegion(num, region)) {
+                                sudoku nuevo(aux.matriz);
+                                nuevo.matriz[i][j] = num;
+                                lista.push_back(nuevo);
                         }
                     }
                     celdaVaciaEncontrada = true; // Solo expandimos el primer vacío
