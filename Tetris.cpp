@@ -47,7 +47,7 @@ char Pieza::obtenerTipo() {
     return tipo;
 }
 void Pieza::rotar() {
-    // En pocas palabras, va a estar en chino jaja
+    // En pocas palabras, va a estar en chino jaja          -           23/04/26 9:00 PM aprox jaja
 }
 void Pieza::moverIzquierda() {
     coordY--;
@@ -69,15 +69,16 @@ class Tablero {
     void colocarPieza(Pieza pieza);
     void fijarPiezaEnTablero(Pieza pza);
     void mostrarPiezasFijas();
-    void mostrarTablero();
-    void reiniciarTablero();
+    void mostrarTablero();          // Tablero con bordes
+    void reiniciarTablero();        // Vaciamos el tablero
+    bool estaOcupado(int x, int y); // Revisa si ya hay una pieza ahi
 };
 
 Tablero::Tablero() {
     int i = 0, j = 0;
     fo(i, 20) {
         fo(j, 10) {
-            tablero[i][j] = "  ";
+            tablero[i][j] = "  "; // Tablero vacio
         }
     }
 }
@@ -100,7 +101,8 @@ void Tablero::mostrarTablero() {
 void Tablero::fijarPiezaEnTablero(Pieza pieza) {
     VecPar coords = pieza.obtenerCoordenadas();
     for (auto coord : coords) {
-        piezasEnTablero.push_back({coord, piezas[pieza.obtenerTipo()]});
+        piezasEnTablero.push_back(
+            {coord, piezas[pieza.obtenerTipo()]}); // Obtenemos el emoji correspodiente jaja
     }
 }
 void Tablero::mostrarPiezasFijas() {
@@ -131,7 +133,14 @@ void Tablero::colocarPieza(Pieza pieza) {
         }
     }
 }
-
+bool Tablero::estaOcupado(int x, int y) {
+    for (auto pieza : piezasEnTablero) {
+        if (pieza.first.first == x && pieza.first.second == y) {
+            return true;
+        }
+    }
+    return false;
+}
 // Funciones para el funcionamiento del juego
 Pieza generarPieza() {
     int tipo = rand() % 7; // Número del 0 al 6
@@ -157,8 +166,8 @@ Pieza generarPieza() {
 }
 
 int main() {
-    // cout << "🟥🟧🟨🟩🟦🟪";
-    srand(time(0));
+    // cout << "🟥🟧🟨🟩🟦🟪"; // Lso emojies se buscan con: windows + .
+    srand(time(0)); // Es la semilla para generar piezas aleatorias
 
     Tablero tablero;
     Pieza piezaActual = generarPieza();
@@ -166,50 +175,75 @@ int main() {
 
     while (jugando) {
         system("cls"); // Limpiar terminal
-        tablero.reiniciarTablero();
-        tablero.mostrarPiezasFijas();
-        tablero.colocarPieza(piezaActual);
-        tablero.mostrarTablero();
+        // tablero.reiniciarTablero();
+        tablero.mostrarPiezasFijas();      // Colocamos la piezas que ya estan hasta abajo
+        tablero.colocarPieza(piezaActual); // Colocamos la pieza en turno
+        tablero.mostrarTablero();          // Renderizamos el tablero
 
-        // Leer entrada si hay disponible
+        // Leer la entrada del teclado
         if (_kbhit()) {
             char tecla = _getch();
             tecla = toupper(tecla);
 
+            // Cuando guardo le da este formato, luego arreglo eso
+            // Es un archivo especial que tengo para el formato del codigo
+            // Ese archivo ni siquera se sube al repo
             string direccion = (tecla == 'S')   ? "Abajo"
                                : (tecla == 'A') ? "Izquierda"
                                : (tecla == 'D') ? "Derecha"
                                                 : "NoValida";
 
+            VecPar coords = piezaActual.obtenerCoordenadas();
+            bool estaBordeDerecho = false;   // Si esta tocando el borde derecho del tablero
+            bool estaBordeIzquierdo = false; // Si esta tocando el borde izquierdo del tablero
+
+            for (auto coord : coords) {
+                if (coord.second <= 0) { // Si cualquier bloque de la pieza esta tocando el borde
+                    estaBordeIzquierdo = true;
+                    break;
+                }
+                if (coord.second >= 9) { // Si cualquier bloque de la pieza esta tocando el borde
+                    estaBordeDerecho = true;
+                    break;
+                }
+            }
+
+            VecPar coordsSimuladas = coords;
+            ;
+
             // Modificamos su posicion dependiendo de la tecla
             if (direccion != "NoValida") {
                 if (direccion == "Abajo") {
                     piezaActual.moverAbajo();
-                } else if (direccion == "Izquierda") {
+                } else if (direccion == "Izquierda" && !estaBordeIzquierdo) {
                     piezaActual.moverIzquierda();
-                } else if (direccion == "Derecha") {
+                } else if (direccion == "Derecha" && !estaBordeDerecho) {
                     piezaActual.moverDerecha();
                 }
             }
         }
-        Sleep(250);
+        Sleep(300);
         // Verificamos si se puede mover en esa direccion o si ya llego hasta abajo
         VecPar coords = piezaActual.obtenerCoordenadas();
-        bool puedeMoverse = true;
+        bool estaAbajo = true; // Si ya llego al fondo del tablero
 
         for (auto coord : coords) {
-            if (coord.first >= 19) { // Si cualquier bloque está en la última fila
-                puedeMoverse = false;
+            if (coord.first >= 19) { // Si cualquier bloque de la pieza está en la última fila
+                estaAbajo = false;
                 break;
             }
         }
 
-        if (!puedeMoverse) {
+        // Verificamos que las piesas ya hayan llegado hasta abajo y generamos una nueva
+        // Falta que cosilionen con los lados y con otras piezas
+        if (!estaAbajo) {
             tablero.fijarPiezaEnTablero(piezaActual);
             piezaActual = generarPieza();
         } else {
+            // Sigue bajando la pieza en turno
             piezaActual.moverAbajo();
         }
+        // Vaciamos el tablero para volver a poner la piezas
         tablero.reiniciarTablero();
     }
 

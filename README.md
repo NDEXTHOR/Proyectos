@@ -149,3 +149,89 @@ Como se juega:
 
 # Proyectos - Snake
 
+Es el clásico juego de la serpiente en consola. La serpiente crece cada vez que come una manzana, y pierdes si golpeas una pared o tu propia cola.
+
+Como funciona:
+
+- La serpiente se controla con las teclas de dirección (o W/A/S/D) en tiempo real.
+- La comida aparece en posiciones aleatorias del tablero.
+- Cada vez que comes, la serpiente crece un segmento.
+- El juego termina si chocas con una pared o con tu propia cola.
+
+Características:
+
+- Sistema de collisiones para paredes y autocolisión.
+- Generador de comida en posiciones aleatorias.
+- Tablero con bordes definidos.
+- Puntuación que aumenta con cada comida consumida.
+- Velocidad que aumenta conforme avanzas (juego más desafiante).
+
+Controles:
+
+- Flechas del teclado o W/A/S/D para mover la serpiente.
+- ESC para salir del juego.
+
+Flujo general del programa:
+
+1. Se dibuja el tablero inicial con la serpiente en el centro.
+2. La comida aparece en una posición aleatoria.
+3. El juego entra en un loop donde:
+   - Lee la entrada del usuario (dirección).
+   - Mueve la serpiente en esa dirección.
+   - Revisa si comió (si está en la misma posición que la comida).
+   - Si comió, crece la cola y aparece nueva comida.
+   - Revisa colisiones (paredes o autocuerpo).
+   - Redibuja el tablero con la posición actualizada.
+4. Cuando pierdes, muestra tu puntuación final.
+
+Mejoras futuras:
+
+- Sistema de niveles con tableros diferentes.
+- Obstáculos que aumentan la dificultad.
+- Puntuaciones máximas guardadas en archivo.
+- Diferentes velocidades de juego.
+
+
+# Proyectos - Tetris
+
+Tetris en consola. Bloques que caen del cielo, los rotamos, los alineamos y desaparecen. Es un trabajo en progreso con las mecánicas básicas ya implementadas.
+
+Componentes principales:
+
+- **Piezas (Tetrominos)**: las 7 piezas estándar de Tetris (I, O, T, S, Z, J, L).
+- **Tablero de juego**: matriz que representa el campo donde caen las piezas.
+- **Sistema de rotación**: cada pieza puede rotarse para encajar mejor.
+- **Detección de líneas completas**: cuando una fila se llena, desaparece.
+
+Características implementadas:
+
+- Generación aleatoria de piezas.
+- Movimiento lateral de las piezas (izquierda/derecha).
+- Sistema de rotación de piezas.
+- Detección de colisiones para evitar que las piezas se salgan del tablero.
+- Eliminación de líneas completas.
+- Sistema de puntuación básico.
+- Tablero visual en consola.
+- Velocidad de caída que puede aumentar.
+
+Controles:
+
+- Flechas izquierda/derecha para mover la pieza.
+- Flecha arriba para rotar la pieza.
+- Flecha abajo para acelerar la caída.
+- ESC para pausar o salir.
+
+Flujo general del programa:
+
+1. Se inicializa el tablero vacío.
+2. Se genera una pieza aleatoria en la parte superior.
+3. El juego entra en un loop principal donde:
+   - La pieza desciende automáticamente cada cierto tiempo.
+   - Lee entrada del usuario (movimiento o rotación).
+   - Valida que los movimientos no causen colisiones.
+   - Dibuja el tablero actualizado.
+4. Cuando una pieza toca el fondo o otra pieza, se fija en el tablero.
+5. Se revisa si hay líneas completas y se eliminan.
+6. Se genera una nueva pieza en la parte superior.
+7. El juego termina cuando una nueva pieza no puede colocarse (lleno hasta arriba).
+8. Se muestra la puntuación final.
